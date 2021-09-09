@@ -73,6 +73,8 @@ public class View {
         double avg = 0;
         String changeScore;
         String semester = null;
+        double tScore = 0;
+        int creditCount = 0;
 
         System.out.println("====================================");
         System.out.println("[1]1학년 1학기");
@@ -113,40 +115,67 @@ public class View {
                 semester = "4학년 2학기";
                 break;
             default:
-                System.out.println("잘못된 입렵입니다.");
+                System.out.println("잘못된 입력입니다.");
         }
 
         while (true) {
+            String subject = null;
+            System.out.println(" ========== 과목 목록 ==========");
+            System.out.println("1. 자바프로그래밍 - 홍길동 교수님");
+            System.out.println("2. 소프트웨어공학 - 뽀로로 교수님");
+            System.out.println("3. 데이터베이스 - 김영희 교수님");
+            System.out.println(" ");
             System.out.print("과목을 입력하세요: ");
-            String subject = scanner.next();
+            subject = scanner.next();
+            if (!subject.equals("자바프로그래밍") && !subject.equals("소프트웨어공학") && !subject.equals("데이터베이스")) {
+                System.out.println("다시 입력하세요.");
+                continue;
+            }
+
+            // 과목 입력시 잘못된 글자를 입력 했을 때 재입력
+
 
             System.out.print("점수 입력: ");
             double score = scanner.nextDouble();
             sCount++;
             total += score;
-            avg = total / sCount;
 
-            if (score == 4.5) {
-                changeScore = "A+";
-            } else if (score < 4.5 && score >= 4.0) {
-                changeScore = "A0";
-            } else if (score < 4.0 && score >= 3.5) {
-                changeScore = "B+";
-            } else if (score < 3.5 && score >= 3.0) {
-                changeScore = "B0";
-            } else if (score < 3.0 && score >= 2.5) {
-                changeScore = "C+";
-            } else if (score < 2.5 && score >= 2.0) {
-                changeScore = "C";
-            } else if (score < 2.0 && score >= 1.5) {
-                changeScore = "D+";
-            } else if (score < 1.5 && score >= 1.0) {
-                changeScore = "D";
-            } else {
-                changeScore = "F";
-            }
+            System.out.print("이수학점 입력: ");
+            int credit = scanner.nextInt();
+            creditCount += creditCount;
 
-            sc.insert(semester, subject, score, changeScore);
+            // 평균학점 구하는 식: (과목1 점수 * 과목1 이수학점) + (과목2 점수 * 과목2 이수학점)... / 총 이수학점
+            tScore = score * credit;
+            total += tScore;
+            avg = total / creditCount;
+
+                if (score == 4.5) {
+                    changeScore = "A+";
+                } else if (score > 4.5) {
+                    System.out.println("최대 4.5점을 초과할 수 없습니다.");
+                    System.out.println("과목부터 재 입력 부탁드립니다.");
+                    // 이 부분은 재 입력 받는 부분을 못하겠어서 추후 수정 하겠습니다!!
+                    continue;
+                } else if (score < 4.5 && score >= 4.0) {
+                    changeScore = "A";
+                } else if (score < 4.0 && score >= 3.5) {
+                    changeScore = "B+";
+                } else if (score < 3.5 && score >= 3.0) {
+                    changeScore = "B";
+                } else if (score < 3.0 && score >= 2.5) {
+                    changeScore = "C+";
+                } else if (score < 2.5 && score >= 2.0) {
+                    changeScore = "C";
+                } else if (score < 2.0 && score >= 1.5) {
+                    changeScore = "D+";
+                } else if (score < 1.5 && score >= 1.0) {
+                    changeScore = "D";
+                } else {
+                    changeScore = "F";
+                }
+
+
+            sc.insert(semester, subject, credit, score, changeScore);
 
             System.out.println("\n[추가 입력하기 : 1 / 메인메뉴로 돌아가기: 0]");
             System.out.print(">> ");
@@ -167,7 +196,7 @@ public class View {
             System.out.println("\n# 저장된 성적이 없습니다.");
         } else {
             System.out.println("\n=========== 전체 성적 조회 ===========");
-            System.out.println("|   학기   |   과목명   |   성적   |   학점   |");
+            System.out.println("|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
             for (int i = 0; i < count; i++) {
                 System.out.println(students[i].showScore());
             }

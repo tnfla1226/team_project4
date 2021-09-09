@@ -7,6 +7,10 @@ public class Student {
     private String name;
     //학번
     private int studentNum;
+
+
+    //이수학점
+    private int credit;
     //학기
     private String semester;
     // 과목
@@ -20,16 +24,17 @@ public class Student {
     private double avg;
     private String grade;
 
-    public Student(String semester, String subject, double score, String changeScore) {
+    public Student(String semester, String subject, int credit, double score, String changeScore) {
 
         this.semester = semester;
         this.subject = subject;
         this.score = score;
         this.changeScore = changeScore;
+        this.credit = credit;
     }
 
     public String showScore() {
-        return this.semester + "  |  " + this.subject + "  |  " + this.score + "  |  " + this.changeScore;
+        return this.semester + "  |  " + this.subject + "  |  " + this.credit + "  |  " + this.score + "  |  " + this.changeScore;
     }
 
     public String getName() {
@@ -44,8 +49,21 @@ public class Student {
         return studentNum;
     }
 
+    public Student(int credit) {
+        this.credit = credit;
+    }
+
+
     public void setStudentNum(int studentNum) {
         this.studentNum = studentNum;
+    }
+
+    public int getCredit() {
+        return credit;
+    }
+
+    public void setCredit(int credit) {
+        this.credit = credit;
     }
 
     public String getSemester() {

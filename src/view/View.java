@@ -33,6 +33,7 @@ public class View {
                     insert();
                     break;
                 case 2:
+                    modifyMenu();
                     break;
                 case 3:
                     break;
@@ -72,51 +73,12 @@ public class View {
         double total = 0;
         double avg = 0;
         String changeScore;
-        String semester = null;
+        String semester;
         double tScore = 0;
         int creditCount = 0;
 
-        System.out.println("====================================");
-        System.out.println("[1]1학년 1학기");
-        System.out.println("[2]1학년 2학기");
-        System.out.println("[3]2학년 1학기");
-        System.out.println("[4]2학년 2학기");
-        System.out.println("[5]3학년 1학기");
-        System.out.println("[6]3학년 2학기");
-        System.out.println("[7]4학년 1학기");
-        System.out.println("[8]4학년 2학기");
-        System.out.println("====================================");
-        System.out.print("학기를 선택하세요: ");
-        int menuNo = scanner.nextInt();
-
-        switch (menuNo) {
-            case 1:
-                semester = "1학년 1학기";
-                break;
-            case 2:
-                semester = "1학년 2학기";
-                break;
-            case 3:
-                semester = "2학년 1학기";
-                break;
-            case 4:
-                semester = "2학년 2학기";
-                break;
-            case 5:
-                semester = "3학년 1학기";
-                break;
-            case 6:
-                semester = "3학년 2학기";
-                break;
-            case 7:
-                semester = "4학년 1학기";
-                break;
-            case 8:
-                semester = "4학년 2학기";
-                break;
-            default:
-                System.out.println("잘못된 입력입니다.");
-        }
+        // 학기를 선택할 수 있는 메서드
+        sc.seasonMenu();
 
         while (true) {
             String subject = null;
@@ -127,12 +89,17 @@ public class View {
             System.out.println(" ");
             System.out.print("과목을 입력하세요: ");
             subject = scanner.next();
-            if (!subject.equals("자바프로그래밍") && !subject.equals("소프트웨어공학") && !subject.equals("데이터베이스")) {
+            if (!subject.equals("자바프로그래밍") && !subject.equals("소프트웨어공학") && !subject.equals("데이터베이스")
+                    && !subject.equals("1") && !subject.equals("2") && !subject.equals("3")) {
                 System.out.println("다시 입력하세요.");
                 continue;
+            } else if (subject.equals("1")) subject = "자바프로그래밍";
+            else if (subject.equals("2")) {
+                subject = "소프트웨어공학";
+            } else if (subject.equals("3")) {
+                subject = "데이터베이스";
             }
 
-            // 과목 입력시 잘못된 글자를 입력 했을 때 재입력
 
 
             System.out.print("점수 입력: ");
@@ -140,42 +107,41 @@ public class View {
             sCount++;
             total += score;
 
+            if (score == 4.5) {
+                changeScore = "A+";
+            } else if (score > 4.5) {
+                System.out.println("최대 4.5점을 초과할 수 없습니다.");
+                System.out.println("과목부터 재 입력 부탁드립니다.");
+                // 이 부분은 재 입력 받는 부분을 못하겠어서 추후 수정 하겠습니다!!
+                continue;
+            } else if (score < 4.5 && score >= 4.0) {
+                changeScore = "A";
+            } else if (score < 4.0 && score >= 3.5) {
+                changeScore = "B+";
+            } else if (score < 3.5 && score >= 3.0) {
+                changeScore = "B";
+            } else if (score < 3.0 && score >= 2.5) {
+                changeScore = "C+";
+            } else if (score < 2.5 && score >= 2.0) {
+                changeScore = "C";
+            } else if (score < 2.0 && score >= 1.5) {
+                changeScore = "D+";
+            } else if (score < 1.5 && score >= 1.0) {
+                changeScore = "D";
+            } else {
+                changeScore = "F";
+            }
             System.out.print("이수학점 입력: ");
             int credit = scanner.nextInt();
             creditCount += creditCount;
+
 
             // 평균학점 구하는 식: (과목1 점수 * 과목1 이수학점) + (과목2 점수 * 과목2 이수학점)... / 총 이수학점
             tScore = score * credit;
             total += tScore;
             avg = total / creditCount;
 
-                if (score == 4.5) {
-                    changeScore = "A+";
-                } else if (score > 4.5) {
-                    System.out.println("최대 4.5점을 초과할 수 없습니다.");
-                    System.out.println("과목부터 재 입력 부탁드립니다.");
-                    // 이 부분은 재 입력 받는 부분을 못하겠어서 추후 수정 하겠습니다!!
-                    continue;
-                } else if (score < 4.5 && score >= 4.0) {
-                    changeScore = "A";
-                } else if (score < 4.0 && score >= 3.5) {
-                    changeScore = "B+";
-                } else if (score < 3.5 && score >= 3.0) {
-                    changeScore = "B";
-                } else if (score < 3.0 && score >= 2.5) {
-                    changeScore = "C+";
-                } else if (score < 2.5 && score >= 2.0) {
-                    changeScore = "C";
-                } else if (score < 2.0 && score >= 1.5) {
-                    changeScore = "D+";
-                } else if (score < 1.5 && score >= 1.0) {
-                    changeScore = "D";
-                } else {
-                    changeScore = "F";
-                }
-
-
-            sc.insert(semester, subject, credit, score, changeScore);
+            sc.insert(sc.semester2, subject, credit, score, changeScore);
 
             System.out.println("\n[추가 입력하기 : 1 / 메인메뉴로 돌아가기: 0]");
             System.out.print(">> ");
@@ -186,6 +152,7 @@ public class View {
                 return;
             }
         }
+
     }
 
     public void printAll() {
@@ -202,5 +169,12 @@ public class View {
             }
         }
     }
+
+    public void modifyMenu() {
+        sc.modifymenu();
+    }
+
+
 }
+
 

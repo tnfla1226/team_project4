@@ -184,7 +184,6 @@ public class View {
     public void printOneSemester() {
 
         System.out.println("\n=========== 학기별 성적 조회 ===========");
-        System.out.println("|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
         sc.printSemester(seasonMenu());
 
     }

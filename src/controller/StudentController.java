@@ -175,6 +175,7 @@ public class StudentController {
     public void printSemester(String semester) {
 
         System.out.printf("\n=============== %s 성적 ===============\n", semester);
+        System.out.println("|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
         for (int i = 0; i < existNum(); i++) {
             if (semester.equals(s[i].getSemester())) {
                 System.out.println(s[i].showScore());

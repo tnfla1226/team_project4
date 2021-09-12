@@ -9,6 +9,7 @@ public class StudentController {
     private Student[] s = new Student[SIZE];
     public static final int SIZE = 8;
     double Score = 0;
+    String avg;
 
     // 객체 입력
     public StudentController() {
@@ -89,6 +90,30 @@ public class StudentController {
         }
     }
 
+    //성적 삭제 메서드
+    public boolean delete(String subject) {
+        int count = existNum();
+        //삭제할 데이터 인덱스 구하기
+        int delIdx = -1;
+        for (int i = 0; i < count; i++) {
+            if (subject.equals(s[i].getSubject())) {
+                delIdx = i;
+                break;
+            }
+        }
+
+        //삭제 알고리즘
+        if (delIdx != -1) {
+            for (int i = delIdx; i < count - 1; i++) {
+                s[i] = s[i+1];
+            }
+            s[count - 1] = null; //마지막 데이터 null로 변경
+            return true;
+        }
+        return false;
+    }
+
+
     //입력받은 점수를 학점으로 변환하는 메서드
     public String changeScore(double score) {
         String changeScore = null;
@@ -114,11 +139,43 @@ public class StudentController {
         return changeScore;
     }
 
+
+    // 평균학점 구하는 식: (과목1 점수 * 과목1 이수학점) + (과목2 점수 * 과목2 이수학점)... / 총 이수학점
+    //총 이수학점 구하는 메서드
+    public int getTotalCredit() {
+
+        int totalCredit = 0;
+        for (int i = 0; i < existNum(); i++) {
+            totalCredit += s[i].getCredit();
+        }
+        return totalCredit;
+    }
+
+    //점수*이수학점 구하는 메서드
+    public double getTscore() {
+
+        double tScore = 0;
+        for (int i = 0; i < existNum(); i++) {
+            tScore += s[i].getScore() * s[i].getCredit();
+        }
+        return tScore;
+    }
+
+
+    // 총 평균 학점 구해서 출력하는 메서드
+    public void calculateAvg(double totalScore, int totalCredit) {
+
+        double tempAvg = getTscore()/ getTotalCredit();
+        avg = String.format("%.2f", tempAvg);
+
+        System.out.printf("총 이수학점 : %d   /   평균 학점 : %S\n", getTotalCredit(), avg);
+    }
+
     //전체 출력 메서드
     public Student[] printAll() {
         return s;
     }
-    
+
 }
 
 

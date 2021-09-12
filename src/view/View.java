@@ -46,7 +46,7 @@ public class View {
                     deleteScore();
                     break;
                 case 4:
-                    printSemester();
+                    printOneSemester();
                     break;
                 case 5:
                     printAll();
@@ -181,12 +181,24 @@ public class View {
     }
 
     //학기별 조회 메서드
-    public void printSemester() {
+    public void printOneSemester() {
 
         System.out.println("\n=========== 학기별 성적 조회 ===========");
         System.out.println("|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
         sc.printSemester(seasonMenu());
 
+    }
+
+    //전체조회시 학기명 넘기는 메서드
+    public void printAllSemester() {
+        sc.printSemester("1학년 1학기");
+        sc.printSemester("1학년 2학기");
+        sc.printSemester("2학년 1학기");
+        sc.printSemester("2학년 2학기");
+        sc.printSemester("3학년 1학기");
+        sc.printSemester("3학년 2학기");
+        sc.printSemester("4학년 1학기");
+        sc.printSemester("4학년 2학기");
     }
 
     //전체 조회 메서드
@@ -199,24 +211,13 @@ public class View {
         } else {
             System.out.println("\n=========== 전체 성적 조회 ===========\n");
 
-            printAllSeason();
+            printAllSemester();
 
             System.out.println("====================================");
             sc.calculateAvg(total, creditCount);
             System.out.println("");
 
         }
-    }
-    //전체조회시 학기명 넘기는 메서드
-    public void printAllSeason() {
-        sc.printSemester("1학년 1학기");
-        sc.printSemester("1학년 2학기");
-        sc.printSemester("2학년 1학기");
-        sc.printSemester("2학년 2학기");
-        sc.printSemester("3학년 1학기");
-        sc.printSemester("3학년 2학기");
-        sc.printSemester("4학년 1학기");
-        sc.printSemester("4학년 2학기");
     }
 
     //학기 선택 메서드
@@ -273,8 +274,6 @@ public class View {
         semester2 = semester;
         return semester;
     }
-
-
 }
 
 

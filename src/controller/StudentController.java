@@ -171,6 +171,7 @@ public class StudentController {
         System.out.printf("총 이수학점 : %d   /   평균 학점 : %S\n", getTotalCredit(), avg);
     }
 
+    //학기별 성적 출력하는 메서드
     public void printSemester(String semester) {
 
         System.out.printf("\n=============== %s 성적 ===============\n", semester);

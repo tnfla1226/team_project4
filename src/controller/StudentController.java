@@ -118,10 +118,7 @@ public class StudentController {
     public Student[] printAll() {
         return s;
     }
-
-
-
-
+    
 }
 
 

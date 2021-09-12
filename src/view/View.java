@@ -177,7 +177,6 @@ public class View {
                 continue;
             }
         }
-
     }
 
     //학기별 조회 메서드

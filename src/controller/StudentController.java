@@ -60,7 +60,7 @@ public class StudentController {
 
                 while (true) {
                     //성적 입력
-                    System.out.print("\n수정 할 성적을 입력 해주세요: ");
+                    System.out.print("\n수정 할 성적을 입력해주세요>> ");
                     Score = scanner.nextDouble();
 
                     if (Score > 4.5) {
@@ -169,6 +169,17 @@ public class StudentController {
         avg = String.format("%.2f", tempAvg);
 
         System.out.printf("총 이수학점 : %d   /   평균 학점 : %S\n", getTotalCredit(), avg);
+    }
+
+    public void printSemester(String semester) {
+
+        System.out.printf("\n=============== %s 성적 ===============\n", semester);
+        for (int i = 0; i < existNum(); i++) {
+            if (semester.equals(s[i].getSemester())) {
+                System.out.println(s[i].showScore());
+            }
+        }
+        System.out.println("");
     }
 
     //전체 출력 메서드

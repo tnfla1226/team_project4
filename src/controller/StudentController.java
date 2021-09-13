@@ -11,6 +11,7 @@ public class StudentController {
     double Score = 0;
     String avg;
 
+
     // 객체 입력
     public StudentController() {
         s[0] = new Student("4학년 1학기", "자바프로그래밍", 3, 4.0, "A");
@@ -54,8 +55,7 @@ public class StudentController {
             // 이 if문으로 인해 입력 한 학기에 일치하는 해당 배열만 수정 됨.
             if (targetSemester.equals(s[i].getSemester())) {
                 System.out.println("\n=============== 수정하실 과목의 입력 정보 ===============");
-                System.out.println("\n|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
-                System.out.println("");
+                System.out.println("\n|   학기   |   과목명   |  이수학점  |   성적   |   학점   |\n");
                 System.out.println(s[i].showScore());
 
                 while (true) {
@@ -66,24 +66,20 @@ public class StudentController {
                     if (Score > 4.5) {
                         System.out.println("최대 4.5점을 초과할 수 없습니다.");
                         continue;
-                    }
-                    else {
+                    } else {
                         break;
                     }
                 }
 
-                System.out.println("");
+                System.out.println();
                 // 입력받은 성적으로 수정
                 s[i].setScore(Score);
                 // 입력받은 성적은 changeScore 메서드로 변경
                 s[i].setChangeScore(changeScore(Score));
-                System.out.println("");
-                System.out.println("=============== 수정 완료 성적 ===============");
-                System.out.println("");
-                System.out.println("|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
-                System.out.println("");
+                System.out.println("\n=============== 수정 완료 성적 ===============\n");
+                System.out.println("|   학기   |   과목명   |  이수학점  |   성적   |   학점   |\n");
                 System.out.println(s[i].showScore());
-                System.out.println("");
+                System.out.println();
                 break;
             }
 
@@ -105,7 +101,7 @@ public class StudentController {
         //삭제 알고리즘
         if (delIdx != -1) {
             for (int i = delIdx; i < count - 1; i++) {
-                s[i] = s[i+1];
+                s[i] = s[i + 1];
             }
             s[count - 1] = null; //마지막 데이터 null로 변경
             return true;
@@ -161,11 +157,10 @@ public class StudentController {
         return tScore;
     }
 
-
     // 총 평균 학점 구해서 출력하는 메서드
     public void calculateAvg(double totalScore, int totalCredit) {
 
-        double tempAvg = getTscore()/ getTotalCredit();
+        double tempAvg = getTscore() / getTotalCredit();
         avg = String.format("%.2f", tempAvg);
 
         System.out.printf("총 이수학점 : %d   /   평균 학점 : %S\n", getTotalCredit(), avg);
@@ -181,7 +176,29 @@ public class StudentController {
                 System.out.println(s[i].showScore());
             }
         }
+        calculateOneAvg(semester);
         System.out.println("");
+    }
+
+    //학기별 평균 학점 구해서 출력하는 메서드
+    public void calculateOneAvg(String semester) {
+        String semesterAvg;
+        double sTotalScore = 0;
+        int sTotalCredit = 0;
+        for (int i = 0; i < existNum(); i++) {
+            if (semester.equals(s[i].getSemester())) {
+                sTotalScore += s[i].getScore() * s[i].getCredit();
+                sTotalCredit += s[i].getCredit();
+            }
+        }
+        double tempAvg = 0.0;
+        if (sTotalCredit <= 0) {
+            semesterAvg = "0";
+        } else {
+            tempAvg = sTotalScore / sTotalCredit;
+            semesterAvg = String.format("%.2f", tempAvg);
+        }
+        System.out.printf("총 이수학점 : %d   /   평균 학점 : %s\n", sTotalCredit, semesterAvg);
     }
 
     //전체 출력 메서드

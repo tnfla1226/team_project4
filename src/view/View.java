@@ -9,7 +9,7 @@ public class View {
 
     private Scanner scanner = new Scanner(System.in);
     private StudentController sc = new StudentController();
-    int menuNo = -1;
+    String menuNo = "-1";
     int sCount = 0;
     public String semester2;
     double Score = 0;
@@ -21,7 +21,7 @@ public class View {
     public void mainMenu() {
 
         //메인화면
-        while (menuNo != 6) {
+        while (menuNo != "6") {
 
             System.out.println("========== 학점 관리 프로그램 ==========");
             System.out.println("[1]성적 입력");
@@ -33,31 +33,32 @@ public class View {
             System.out.println("====================================");
             System.out.print("이용하실 메뉴 번호를 입력하세요>> ");
 
-            menuNo = scanner.nextInt();
+            menuNo = scanner.next();
 
             switch (menuNo) {
-                case 1:
+                case "1":
                     insert();
                     break;
-                case 2:
+                case "2":
                     modifyMenu();
                     break;
-                case 3:
+                case "3":
                     deleteScore();
                     break;
-                case 4:
+                case "4":
                     printOneSemester();
                     break;
-                case 5:
+                case "5":
                     printAll();
                     break;
-                case 6:
+                case "6":
                     System.out.println("프로그램을 종료합니다.");
                     System.exit(0); //프로그램 종료
                     break;
                 default:
                     System.out.println("메뉴를 잘못 입력하였습니다.");
             }
+
 
         }
     }
@@ -77,18 +78,18 @@ public class View {
 
         while (true) {
             String subject = null;
-            System.out.println("=========== 과목 목록 ===========");
+            System.out.println("============= 과목 목록 =============");
             System.out.println("1. 자바프로그래밍 - 홍길동 교수님");
             System.out.println("2. 소프트웨어공학 - 뽀로로 교수님");
             System.out.println("3. 데이터베이스 - 김영희 교수님");
-            System.out.println(" ");
+            System.out.println("====================================");
 
             //과목 입력
-            System.out.print("과목을 입력하세요>> ");
+            System.out.print("과목 입력: ");
             subject = scanner.next();
             if (!subject.equals("자바프로그래밍") && !subject.equals("소프트웨어공학") && !subject.equals("데이터베이스")
                     && !subject.equals("1") && !subject.equals("2") && !subject.equals("3")) {
-                System.out.println("다시 입력하세요.");
+                System.out.println("잘못된 입력입니다.");
                 continue;
             } else if (subject.equals("1")) subject = "자바프로그래밍";
             else if (subject.equals("2")) {
@@ -99,10 +100,12 @@ public class View {
 
             //점수 입력
             modifyScore: while(true) {
-            System.out.print("점수 입력: ");
-            score = scanner.nextDouble();
-            sCount++;
-            total += score;
+
+                System.out.print("점수 입력: ");
+                score = scanner.nextDouble();
+
+                sCount++;
+                total += score;
 
                 if (score > 4.5) {
                     System.out.println("최대 4.5점을 초과할 수 없습니다.");
@@ -122,8 +125,8 @@ public class View {
 
             System.out.println("\n[추가 입력하기 : 1 / 메인메뉴로 돌아가기: 0]");
             System.out.print(">> ");
-            menuNo = scanner.nextInt();
-            if (menuNo == 1) {
+            menuNo = scanner.next();
+            if (menuNo.equals("1")) {
                 continue;
             } else {
                 return;
@@ -136,16 +139,16 @@ public class View {
         String subject = null;
         String targetSemester = null;
         while (true) {
-            System.out.println("\n=========== 과목 목록 ===========");
+            System.out.println("\n============= 과목 목록 =============");
             System.out.println("자바프로그래밍 - 홍길동 교수님");
             System.out.println("소프트웨어공학 - 뽀로로 교수님");
             System.out.println("데이터베이스 - 김영희 교수님");
+            System.out.println("=====================================");
             System.out.print("\n수정하실 과목을 입력하세요>> ");
             System.out.print(">> ");
             subject = scanner.next();
-            System.out.println("");
-            System.out.println("=============== 입력된 성적 정보 ===============");
-            System.out.println("");
+
+            System.out.println("\n==================== 입력된 성적 정보 ====================");
             System.out.println("|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
             sc.modifySubject(subject);
 
@@ -153,7 +156,7 @@ public class View {
             System.out.print(">> ");
             scanner.nextLine();
             targetSemester = scanner.nextLine();
-            System.out.println("");
+            System.out.println();
             sc.modifySemesterScore(targetSemester);
             break;
 
@@ -187,6 +190,7 @@ public class View {
 
     }
 
+
     //전체조회시 학기명 넘기는 메서드
     public void printAllSemester() {
         sc.printSemester("1학년 1학기");
@@ -213,7 +217,7 @@ public class View {
 
             System.out.println("====================================");
             sc.calculateAvg(total, creditCount);
-            System.out.println("");
+            System.out.println();
 
         }
     }
@@ -235,31 +239,31 @@ public class View {
 
         while (true) {
             System.out.print("학기를 선택하세요>> ");
-            int menuNo = scanner.nextInt();
+            String menuNo = scanner.next();
 
             switch (menuNo) {
-                case 1:
+                case "1":
                     semester = "1학년 1학기";
                     break;
-                case 2:
+                case "2":
                     semester = "1학년 2학기";
                     break;
-                case 3:
+                case "3":
                     semester = "2학년 1학기";
                     break;
-                case 4:
+                case "4":
                     semester = "2학년 2학기";
                     break;
-                case 5:
+                case "5":
                     semester = "3학년 1학기";
                     break;
-                case 6:
+                case "6":
                     semester = "3학년 2학기";
                     break;
-                case 7:
+                case "7":
                     semester = "4학년 1학기";
                     break;
-                case 8:
+                case "8":
                     semester = "4학년 2학기";
                     break;
                 default:

@@ -5,10 +5,6 @@ public class Student {
     // 필드 선언
     // 학생
     private String name;
-    //학번
-    private int studentNum;
-
-
     //이수학점
     private int credit;
     //학기
@@ -22,7 +18,6 @@ public class Student {
     // 숫자로 환산받은 점수를 모두 더함 ( 나중에 나눠서 (A~F)로 변환 예정 )
     private double total;
     private double avg;
-    private String grade;
 
     public Student(String semester, String subject, int credit, double score, String changeScore) {
 
@@ -45,17 +40,8 @@ public class Student {
         this.name = name;
     }
 
-    public int getStudentNum() {
-        return studentNum;
-    }
-
     public Student(int credit) {
         this.credit = credit;
-    }
-
-
-    public void setStudentNum(int studentNum) {
-        this.studentNum = studentNum;
     }
 
     public int getCredit() {
@@ -114,11 +100,4 @@ public class Student {
         this.avg = avg;
     }
 
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
 }

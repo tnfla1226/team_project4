@@ -66,7 +66,7 @@ public class StudentController {
 
     //학기와 성적 수정 메서드
     public void modifySemesterScore(String targetSemester) {
-        System.out.println("\n=============== 수정하실 과목의 입력 정보 =================");
+        System.out.println("\n=============== 수정하실 학기의 입력 정보 =================");
         System.out.println("\n|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
         for (int i = 0; i < existNum(); i++) {
             // 이 if문으로 인해 입력 한 학기에 일치하는 해당 배열만 수정 됨.

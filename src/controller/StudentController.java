@@ -8,15 +8,15 @@ public class StudentController {
     private Scanner scanner = new Scanner(System.in);
     private Student[] s = new Student[SIZE];
     public static final int SIZE = 50;
-    double Score = 0;
+    String Score = null;
     String avg;
 
 
     // 객체 입력
     public StudentController() {
-        s[0] = new Student("1학년 1학기", "자바프로그래밍", 3, 4.0, "A");
-        s[1] = new Student("1학년 1학기", "소프트웨어공학", 2, 3.5, "B+");
-        s[2] = new Student("1학년 2학기", "데이터베이스", 3, 3.5, "B+");
+        s[0] = new Student("1학년 1학기", "자바프로그래밍", 3, "A", 4.0);
+        s[1] = new Student("1학년 1학기", "소프트웨어공학", 2, "B+", 3.5);
+        s[2] = new Student("1학년 2학기", "데이터베이스", 3, "B+", 3.5);
 //        s[3] = new Student("1학년 2학기", "통신개론", 3, 0.0, "F");
 //        s[4] = new Student("2학년 1학기", "프로그래밍언어론", 3, 4.5, "A+");
 //        s[5] = new Student("2학년 1학기", "컴퓨터활용", 3, 4.5, "A+");
@@ -48,7 +48,7 @@ public class StudentController {
 
 
     //입력 메서드
-    public void insert(String semester, String subject, int credit, double score, String changeScore) {
+    public void insert(String semester, String subject, int credit, String score, double changeScore) {
         int count = existNum();
         s[count] = new Student(semester, subject, credit, score, changeScore);
     }
@@ -83,9 +83,10 @@ public class StudentController {
 
                 //성적 입력
                 System.out.print("수정할 성적을 입력하세요>> ");
-                Score = scanner.nextDouble();
-                if (Score > 4.5) {
-                    System.out.println("최대 4.5점을 초과할 수 없습니다.");
+                Score = scanner.next();
+                if (!(Score.equals("A") || Score.equals("A+") || Score.equals("B") || Score.equals("B+")
+                        || Score.equals("C") || Score.equals("C+") || Score.equals("D") || Score.equals("D+") ||Score.equals("F"))) {
+                    System.out.println("[A, A+, B, B+, C, C+, D, D+, F 중의 점수를 입력하세요.]");
                     continue;
                 } else {
                     System.out.println();
@@ -133,26 +134,38 @@ public class StudentController {
 
 
     //입력받은 점수를 학점으로 변환하는 메서드
-    public String changeScore(double score) {
-        String changeScore = null;
-        if (score == 4.5) {
-            changeScore = "A+";
-        } else if (score < 4.5 && score >= 4.0) {
-            changeScore = "A";
-        } else if (score < 4.0 && score >= 3.5) {
-            changeScore = "B+";
-        } else if (score < 3.5 && score >= 3.0) {
-            changeScore = "B";
-        } else if (score < 3.0 && score >= 2.5) {
-            changeScore = "C+";
-        } else if (score < 2.5 && score >= 2.0) {
-            changeScore = "C";
-        } else if (score < 2.0 && score >= 1.5) {
-            changeScore = "D+";
-        } else if (score < 1.5 && score >= 1.0) {
-            changeScore = "D";
-        } else {
-            changeScore = "F";
+    public double changeScore(String score) {
+
+        double changeScore = 0;
+        switch (score) {
+            case "A+":
+                changeScore = 4.5;
+                break;
+            case "A":
+                changeScore = 4.0;
+                break;
+            case "B+":
+                changeScore = 3.5;
+                break;
+            case "B":
+                changeScore = 3.0;
+                break;
+            case "C+":
+                changeScore = 2.5;
+                break;
+            case "C":
+                changeScore = 2.0;
+                break;
+            case "D+":
+                changeScore = 1.5;
+                break;
+            case "D":
+                changeScore = 1.0;
+                break;
+            case "F":
+                changeScore = 0.0;
+                break;
+
         }
         return changeScore;
     }
@@ -174,7 +187,7 @@ public class StudentController {
 
         double tScore = 0;
         for (int i = 0; i < existNum(); i++) {
-            tScore += s[i].getScore() * s[i].getCredit();
+            tScore += s[i].getChangeScore() * s[i].getCredit();
         }
         return tScore;
     }
@@ -200,7 +213,7 @@ public class StudentController {
         int sTotalCredit = 0;
         for (int i = 0; i < existNum(); i++) {
             if (semester.equals(s[i].getSemester())) {
-                sTotalScore += s[i].getScore() * s[i].getCredit();
+                sTotalScore += s[i].getChangeScore() * s[i].getCredit();
                 sTotalCredit += s[i].getCredit();
             }
         }

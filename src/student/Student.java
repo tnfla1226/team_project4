@@ -12,14 +12,14 @@ public class Student {
     // 과목
     private String subject;
     // 과목당 점수를 숫자로 환산 ( 4.5 이런식이기 때문에 double 사용 )
-    private double score;
+    private String score;
     // 과목당 점수(A~F)
-    private String changeScore;
+    private double changeScore;
     // 숫자로 환산받은 점수를 모두 더함 ( 나중에 나눠서 (A~F)로 변환 예정 )
     private double total;
     private double avg;
 
-    public Student(String semester, String subject, int credit, double score, String changeScore) {
+    public Student(String semester, String subject, int credit, String score, double changeScore) {
 
         this.semester = semester;
         this.subject = subject;
@@ -68,19 +68,19 @@ public class Student {
         this.subject = subject;
     }
 
-    public String getChangeScore() {
+    public double getChangeScore() {
         return changeScore;
     }
 
-    public void setChangeScore(String changeScore) {
+    public void setChangeScore(double changeScore) {
         this.changeScore = changeScore;
     }
 
-    public double getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(double score) {
+    public void setScore(String score) {
         this.score = score;
     }
 

@@ -12,7 +12,7 @@ public class View {
     String menuNo = "-1";
     int sCount = 0;
     public String semester2;
-    double Score = 0;
+    String Score = null;
     double tScore = 0;
     double total = 0;
     int creditCount = 0;
@@ -66,10 +66,11 @@ public class View {
     //성적 입력 메서드
     public void insert() {
 
-        double score = 0;
+        String score = null;
         String changeScore;
         String semester;
-        String resultScore = null;
+        String subject;
+        double resultScore = 0;
 
 
         // 학기를 선택할 수 있는 메서드
@@ -77,7 +78,6 @@ public class View {
         seasonMenu();
 
         while (true) {
-            String subject = null;
             System.out.println("============= 과목 목록 ==============");
             System.out.println("1. 자바프로그래밍 - 홍길동 교수님");
             System.out.println("2. 소프트웨어공학 - 뽀로로 교수님");
@@ -99,28 +99,17 @@ public class View {
             }
 
             //점수 입력
-            modifyScore: while(true) {
+            modifyScore: while (true) {
 
                 System.out.print("점수 입력: ");
-                try {
-                    score = scanner.nextDouble();
-                } catch (Exception e) {
-                    System.out.println("숫자로만 입력 가능합니다.\n");
-                    scanner.nextLine();
+                score = scanner.next();
+                if (!(score.equals("A") || score.equals("A+") || score.equals("B") || score.equals("B+")
+                        || score.equals("C") || score.equals("C+") || score.equals("D") || score.equals("D+") || score.equals("F"))) {
+                    System.out.println("\n[A, A+, B, B+, C, C+, D, D+, F 중의 점수를 입력하세요.]");
                     continue modifyScore;
                 }
-
-                sCount++;
-                total += score;
-
-                if (score > 4.5) {
-                    System.out.println("최대 4.5점을 초과할 수 없습니다.");
-                    continue modifyScore;
-
-                } else {
-                    resultScore = sc.changeScore(score);
-                    break modifyScore;
-                }
+                resultScore = sc.changeScore(score);
+                break;
             }
 
             //이수학점 임력
@@ -133,11 +122,13 @@ public class View {
             System.out.print(">> ");
             menuNo = scanner.next();
             if (menuNo.equals("1")) {
-                continue;
+                    continue;
             } else {
-                return;
+                    return;
             }
+
         }
+
     }
 
     //성적 수정 메서드

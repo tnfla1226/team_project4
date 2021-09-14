@@ -78,7 +78,7 @@ public class View {
 
         while (true) {
             String subject = null;
-            System.out.println("============= 과목 목록 =============");
+            System.out.println("============= 과목 목록 ==============");
             System.out.println("1. 자바프로그래밍 - 홍길동 교수님");
             System.out.println("2. 소프트웨어공학 - 뽀로로 교수님");
             System.out.println("3. 데이터베이스 - 김영희 교수님");
@@ -102,7 +102,13 @@ public class View {
             modifyScore: while(true) {
 
                 System.out.print("점수 입력: ");
-                score = scanner.nextDouble();
+                try {
+                    score = scanner.nextDouble();
+                } catch (Exception e) {
+                    System.out.println("숫자로만 입력 가능합니다.\n");
+                    scanner.nextLine();
+                    continue modifyScore;
+                }
 
                 sCount++;
                 total += score;
@@ -136,23 +142,11 @@ public class View {
 
     //성적 수정 메서드
     public void modifyMenu() {
-        String subject = null;
         String targetSemester = null;
+        String subject = null;
         while (true) {
-            System.out.println("\n============= 과목 목록 =============");
-            System.out.println("자바프로그래밍 - 홍길동 교수님");
-            System.out.println("소프트웨어공학 - 뽀로로 교수님");
-            System.out.println("데이터베이스 - 김영희 교수님");
-            System.out.println("=====================================");
-            System.out.print("\n수정하실 과목을 입력하세요>> ");
-            System.out.print(">> ");
-            subject = scanner.next();
-
-            System.out.println("\n==================== 입력된 성적 정보 ====================");
-            System.out.println("|   학기   |   과목명   |  이수학점  |   성적   |   학점   |");
-            sc.modifySubject(subject);
-
-            System.out.println("수정하실 학기를 입력해주세요. ex) 4학년 2학기");
+            printAll();
+            System.out.println("수정할 학기를 입력하세요. ex) 4학년 2학기");
             System.out.print(">> ");
             scanner.nextLine();
             targetSemester = scanner.nextLine();
@@ -161,23 +155,30 @@ public class View {
             break;
 
         }
+        return;
     }
 
     //성적 삭제 메서드
     public void deleteScore() {
-        printAll();
         while (true) {
             System.out.println("====================================");
-            System.out.print("삭제할 과목 입력>> ");
-            String subjectName = scanner.next();
-            boolean check = sc.delete(subjectName);
+            String seasoon = seasonMenu();
+            sc.printSemester(seasoon);
 
-            if (check) {
-                System.out.println("삭제되었습니다!");
-                return;
-            } else {
-                System.out.println("삭제할 과목명을 다시 입력하세요.");
-                continue;
+            delete: while (true) {
+                System.out.println("====================================");
+                System.out.print("삭제할 과목 입력>> ");
+                String subjectName = scanner.next();
+                System.out.println();
+                boolean check = sc.delete(seasoon, subjectName);
+
+                if (check) {
+                    System.out.println("삭제되었습니다!");
+                    return;
+                } else {
+                    System.out.println("삭제할 과목명을 다시 입력하세요.");
+                    continue delete;
+                }
             }
         }
     }
@@ -188,38 +189,6 @@ public class View {
         System.out.println("\n=========== 학기별 성적 조회 ===========");
         sc.printSemester(seasonMenu());
 
-    }
-
-
-    //전체조회시 학기명 넘기는 메서드
-    public void printAllSemester() {
-        sc.printSemester("1학년 1학기");
-        sc.printSemester("1학년 2학기");
-        sc.printSemester("2학년 1학기");
-        sc.printSemester("2학년 2학기");
-        sc.printSemester("3학년 1학기");
-        sc.printSemester("3학년 2학기");
-        sc.printSemester("4학년 1학기");
-        sc.printSemester("4학년 2학기");
-    }
-
-    //전체 조회 메서드
-    public void printAll() {
-        Student[] students = sc.printAll();
-        int count = sc.existNum();
-
-        if (count == 0) {
-            System.out.println("\n저장된 성적이 없습니다.");
-        } else {
-            System.out.println("\n=========== 전체 성적 조회 ===========\n");
-
-            printAllSemester();
-
-            System.out.println("====================================");
-            sc.calculateAvg(total, creditCount);
-            System.out.println();
-
-        }
     }
 
     //학기 선택 메서드
@@ -268,7 +237,7 @@ public class View {
                     break;
                 default:
                     System.out.println("잘못된 입력입니다.");
-                    System.out.println("");
+                    System.out.println();
                     continue;
             }
             break;
@@ -276,6 +245,37 @@ public class View {
         semester2 = semester;
         return semester;
     }
+
+
+    //전체 조회 메서드
+    public void printAll() {
+        Student[] students = sc.printAll();
+        int count = sc.existNum();
+
+        if (count == 0) {
+            System.out.println("\n저장된 성적이 없습니다.");
+        } else {
+            System.out.println("\n==================== 전체 성적 조회 ====================\n");
+
+            printAllSemester();
+
+            System.out.println("=======================================================");
+            sc.calculateAvg(total, creditCount);
+            System.out.println();
+
+        }
+    }
+
+    //전체조회시 학기명 넘기는 메서드
+    public void printAllSemester() {
+        sc.printSemester("1학년 1학기");
+        sc.printSemester("1학년 2학기");
+        sc.printSemester("2학년 1학기");
+        sc.printSemester("2학년 2학기");
+        sc.printSemester("3학년 1학기");
+        sc.printSemester("3학년 2학기");
+        sc.printSemester("4학년 1학기");
+        sc.printSemester("4학년 2학기");
+    }
+
 }
-
-
